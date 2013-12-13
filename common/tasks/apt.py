@@ -15,7 +15,7 @@ class AptSources(Task):
 		with open(sources_path, 'w') as apt_sources:
 			apt_sources.write(('deb     {apt_mirror} {release} main\n'
 			                   'deb-src {apt_mirror} {release} main\n'
-			                   .format(apt_mirror='http://http.debian.net/debian',
+			                   .format(apt_mirror=info.manifest.bootstrapper['mirror'],
 			                           release=info.manifest.system['release'])))
 			apt_sources.write(('deb     {apt_mirror} {release}/updates main\n'
 			                   'deb-src {apt_mirror} {release}/updates main\n'
