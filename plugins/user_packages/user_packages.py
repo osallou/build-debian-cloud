@@ -15,13 +15,13 @@ class AddUserPackages(Task):
 	def run(self, info):
 		if 'repo' not in info.manifest.plugins['user_packages']:
 			return
-        from common.tools import log_check_call
-        cmd = ['/usr/sbin/chroot', info.root,
-               '/usr/bin/env','DEBIAN_FRONTEND=noninteractive',
-               '/usr/bin/apt-get', 'install',
-               '--force-yes', '--assume-yes']
-        cmd.extend(info.manifest.plugins['user_packages']['repo'])
-        log_check_call(cmd)
+		from common.tools import log_check_call
+		cmd = ['/usr/sbin/chroot', info.root,
+			'/usr/bin/env','DEBIAN_FRONTEND=noninteractive',
+			'/usr/bin/apt-get', 'install',
+			'--force-yes', '--assume-yes']
+		cmd.extend(info.manifest.plugins['user_packages']['repo'])
+		log_check_call(cmd)
 
 
 class AddLocalUserPackages(Task):
