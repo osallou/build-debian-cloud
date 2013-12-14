@@ -9,25 +9,14 @@
 				"user_packages": {
 					"type": "object",
 					"properties": {
-						"repo": {
+ 						"repo": {
 							"type": "array",
-							"items": {
-								"type": "array",
-								"items": {
-									"type": "string"
-									}
-							}
+							"items": { "type": "string" }
 						},
-                        "local": {
-                            "type": "array",
-                            "items": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                    }
-                            }
-                        },
-
+						"local": {
+							"type": "array",
+							"items": { "type": "string" }
+						}
 					}
 				}
 			},
