@@ -1,7 +1,7 @@
 Vagrant provider
 ================
 
-This plugin creates a vmdk file to be used in vagrant box.
+This plugin creates an image file to be used in vagrant box.
 It must be used with the VirtualBox provider.
 It uses a default vagrant user with sudo privileges. VirtualBox additions are
 not installed as package is in contrib.
@@ -25,7 +25,7 @@ Vagrant box creation
 ====================
 
 The VirtualBox provider creates a vdi file. To get a vmdk file required by
-Vagrant, simply use the convert_image plugin:
+Vagrant, simply add to the manifest the convert_image plugin:
 
                 "convert_image": {
                         "enabled": true,

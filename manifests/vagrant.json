@@ -1,0 +1,51 @@
+{
+    "provider"      : "virtualbox",
+    "bootstrapper"  : {
+        "mount_dir" : "/target",
+        "mirror"    : "http://ftp.fr.debian.org/debian/"
+    },
+    "image": {
+        "name" : "debian-{release}-{architecture}-{virtualization}-{%y}{%m}{%d}",
+        "description": "Debian {release} {architecture} ({virtualization})"
+    },
+    "system": {
+        "release"     : "wheezy",
+        "architecture": "amd64",
+        "timezone"    : "UTC",
+        "locale"      : "en_US",
+        "charmap"     : "UTF-8"
+    },
+    "volume": {
+        "backing"   : "vdi",
+        "partitions": {
+            "type": "mbr",
+            "boot": {
+                "size":       32,
+                "filesystem": "ext2"
+            },
+            "root": {
+                "size":       991,
+                "filesystem": "ext4"
+            },
+            "swap": {"size": 128}
+        }
+    },
+    "plugins": {
+        "user_packages": {
+            "enabled": true,
+            "repo": [ "apache2" ],
+            "local": []
+        },
+        "root_password": {
+            "enabled": true,
+            "password": "vagrant"
+        },
+        "vagrant": {
+            "enabled": true
+        }
+        "convert_image": {
+            "enabled": true,
+            "format": "vmdk"
+        }
+    }
+}
