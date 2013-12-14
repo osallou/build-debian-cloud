@@ -1,0 +1,61 @@
+Vagrant provider
+================
+
+This plugin creates a vmdk file to be used in vagrant box.
+It must be used with the VirtualBox provider.
+It uses a default vagrant user with sudo privileges. VirtualBox additions are
+not installed as package is in contrib.
+
+Schema
+======
+
+        "vagrant": {
+            "type": "object",
+            "properties": {
+                "key.public": { "type": "string" }
+            }
+        }
+
+
+A vagrant/key.public key is available to use a specific key instead of default
+insecure (but default) Vagrant key.
+
+
+Vagrant box creation
+====================
+
+The VirtualBox provider creates a vdi file. To get a vmdk file required by
+Vagrant, simply use the convert_image plugin:
+
+                "convert_image": {
+                        "enabled": true,
+                        "format": "vmdk"
+                }
+
+
+For the moment the provider does not create the vagrant box but only the vmdk
+file needed to created the vagrant box.
+
+To create the box, one need virtualbox and vagrant installed, then run the
+following script:
+
+    #!/bin/bash
+
+    set -e
+
+    # Path to the generated VMDK file
+    VMPATH="vagrant"
+    VM=`basename "$VMPATH" .vmdk`
+
+    VBoxManage createvm --name $VM --ostype "Debian_64" --register
+    VBoxManage storagectl $VM --name "SATA Controller" --add sata \
+     --controller IntelAHCI
+    VBoxManage storageattach $VM --storagectl "SATA Controller" --port 0 \
+      --device 0 --type hdd --medium  $VMPATH
+
+    VBoxManage modifyvm $VM --ioapic on
+    VBoxManage modifyvm $VM --boot1 dvd --boot2 disk --boot3 none --boot4 none
+    VBoxManage modifyvm $VM --memory 1024 --vram 128
+    VBoxManage modifyvm $VM --nic1 nat
+
+    vagrant package --base vagrant --output $VM.box
